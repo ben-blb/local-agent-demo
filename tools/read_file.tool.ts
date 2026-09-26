@@ -3,18 +3,25 @@ import * as path from 'path';
 import { ALLOWED_DIR } from './constants.js';
 import { ToolError } from './errors.js';
 
-export function readFile(fileName: string): string {
+/** Path boundary: returns the real path of a file inside ALLOWED_DIR. */
+export function resolveAllowedPath(fileName: string): string {
 	const root = fs.realpathSync(path.join(process.cwd(), ALLOWED_DIR));
 	const target = path.resolve(root, fileName);
+	// realpath also resolves symlinks so they cannot point outside the root
 	let real: string;
 	try {
 		real = fs.realpathSync(target);
 	} catch {
+		// Missing file: still reject traversal before reporting not found
 		assertInside(root, target);
 		throw new ToolError('FILE_NOT_FOUND', `File not found: ${fileName}`);
 	}
 	assertInside(root, real);
-	return fs.readFileSync(real, 'utf-8');
+	return real;
+}
+
+export function readFile(allowedPath: string): string {
+	return fs.readFileSync(allowedPath, 'utf-8');
 }
 
 function assertInside(root: string, target: string): void {
