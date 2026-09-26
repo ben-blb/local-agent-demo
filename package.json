@@ -1,32 +1,32 @@
 {
-  "name": "local-agent-demo",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "tsx main.ts",
-    "typecheck": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "version": "^11.17.0",
-      "onFail": "download"
-    }
-  },
-  "type": "module",
-  "dependencies": {
-    "ollama": "^0.6.3",
-    "opik": "^2.2.81"
-  },
-  "devDependencies": {
-    "@types/node": "^26.6.2",
-    "prettier": "^3.9.9",
-    "tsx": "^4.23.15",
-    "typescript": "^7.0.2"
-  }
+	"name": "local-agent-demo",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "tsx main.ts",
+		"typecheck": "tsc",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devEngines": {
+		"packageManager": {
+			"name": "pnpm",
+			"version": "^11.17.0",
+			"onFail": "download"
+		}
+	},
+	"type": "module",
+	"dependencies": {
+		"ollama": "^0.6.3",
+		"opik": "^2.2.81"
+	},
+	"devDependencies": {
+		"@types/node": "^26.6.2",
+		"prettier": "^3.9.9",
+		"tsx": "^4.23.15",
+		"typescript": "^7.0.2"
+	}
 }
