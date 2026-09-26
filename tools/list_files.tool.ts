@@ -1,6 +1,5 @@
 import * as fs from 'fs';
-
-const ALLOWED_DIR = '/data';
+import { ALLOWED_DIR } from './constants.js';
 
 function listFiles(directory: string): string[] {
 	return fs.readdirSync(directory);
