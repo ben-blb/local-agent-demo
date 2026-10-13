@@ -1,5 +1,7 @@
 import { Opik, type Span } from 'opik';
 
+// FASE 7 y 8 — Cliente de Opik y helpers de tracing. Si Opik no está
+// configurado, el agente sigue funcionando sin enviar traces.
 const projectName = 'local-agent-demo';
 
 // Reads OPIK_URL_OVERRIDE / OPIK_API_KEY / OPIK_WORKSPACE from the environment.

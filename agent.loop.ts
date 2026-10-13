@@ -19,6 +19,8 @@ interface ChatStep {
 	toolCalls: ToolCall[];
 }
 
+// FASE 2 — Una llamada a Ollama (`ollama.chat`) en streaming. Con `withTools`
+// el modelo puede devolver `tool_calls` (FASE 3); el span `llm.chat` es FASE 8.
 async function chat(
 	trace: Trace,
 	model: string,
@@ -96,6 +98,9 @@ async function chat(
 	}
 }
 
+// FASE 5 — Agent loop: chat → si hay tool_calls, el harness las ejecuta
+// (FASE 6) → los resultados vuelven al historial → chat otra vez, hasta que el
+// modelo responde sin tool_calls. El trace `agent.run` es FASE 8.
 export async function agentLoop(message: string, model: string): Promise<void> {
 	const trace = opik.trace({
 		name: 'agent.run',

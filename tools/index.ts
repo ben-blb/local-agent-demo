@@ -1,6 +1,11 @@
 import type { Tool } from 'ollama';
 
-const numbersTool = (name: string, what: string): Tool => ({
+// FASE 3 y 4 — Definiciones visibles para el LLM (nombre, descripción, schema).
+// Solo le dicen qué PUEDE pedir; la ejecución real vive en `*.tool.ts` y el
+// control en `harness.ts`.
+
+// FASE 4 — calculator: operaciones conocidas sobre una lista de números.
+const numbersTool =(name: string, what: string): Tool => ({
 	type: 'function',
 	function: {
 		name,
@@ -20,6 +25,7 @@ const numbersTool = (name: string, what: string): Tool => ({
 });
 
 export const tools: Tool[] = [
+	// FASE 3 — primera tool: list_files (implementación en list_files.tool.ts)
 	{
 		type: 'function',
 		function: {
@@ -28,6 +34,7 @@ export const tools: Tool[] = [
 			parameters: { type: 'object', properties: {} },
 		},
 	},
+	// FASE 4 — read_file (implementación en read_file.tool.ts)
 	{
 		type: 'function',
 		function: {

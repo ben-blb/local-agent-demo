@@ -3,6 +3,9 @@ import * as path from 'path';
 import { ALLOWED_DIR } from './constants.js';
 import { ToolError } from './errors.js';
 
+// FASE 4 — Implementación de read_file (`readFile`, abajo).
+// FASE 6 — Path boundary: `resolveAllowedPath` resuelve rutas absolutas y
+// bloquea todo lo que quede fuera de ./data (p. ej. ../private-demo.txt).
 /** Path boundary: returns the real path of a file inside ALLOWED_DIR. */
 export function resolveAllowedPath(fileName: string): string {
 	const root = fs.realpathSync(path.join(process.cwd(), ALLOWED_DIR));

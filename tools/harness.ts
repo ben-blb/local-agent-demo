@@ -5,6 +5,11 @@ import { ToolError } from './errors.js';
 import { listAllowedFiles } from './list_files.tool.js';
 import { readFile, resolveAllowedPath } from './read_file.tool.js';
 
+// FASE 6 — Harness: reglas EXTERNAS al LLM. Orden de controles en `executeTool`:
+// límite de calls → allowlist → validación de args → path boundary → ejecución.
+// Cada regla se registra como span `harness.*` (FASE 8) vía `guard()`.
+
+// FASE 6 — Límite de tool calls (evita loops infinitos).
 export const MAX_TOOL_CALLS = 10;
 
 export type ToolResult =
@@ -54,6 +59,8 @@ const calculator = (run: (n: number[]) => number): ToolDef<number[]> => ({
 	run,
 });
 
+// FASE 6 — Allowlist (TOOL_NOT_ALLOWED), validación de args (`parse`,
+// INVALID_ARGUMENTS) y path boundary (`authorize`, PATH_NOT_ALLOWED) por tool.
 // The registry is the allowlist: only names listed here can ever run.
 const handlers: Record<string, ToolDef<any, any>> = {
 	list_files: {
@@ -73,6 +80,7 @@ const handlers: Record<string, ToolDef<any, any>> = {
 	max: calculator(max),
 };
 
+// FASE 6 — Normalización de errores: cualquier fallo se convierte en un código estable.
 function normalize(error: unknown): { code: string; message: string } {
 	if (error instanceof ToolError) {
 		return { code: error.code, message: error.message };
@@ -87,6 +95,7 @@ function normalize(error: unknown): { code: string; message: string } {
 	return { code: 'TOOL_EXECUTION_ERROR', message: 'Tool execution failed' };
 }
 
+// FASE 8 — Cada regla del harness aparece en Opik como span `harness.*`.
 /** Runs a harness rule inside a guardrail span recording allow/deny + reason. */
 function guard<T>(
 	trace: Trace,
@@ -185,6 +194,7 @@ export function executeTool(
 	}
 }
 
+// FASE 8 — Ejecución real de la tool, registrada como span `tool.*`.
 function runTool(
 	trace: Trace,
 	name: string,

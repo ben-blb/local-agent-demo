@@ -1,3 +1,5 @@
+// FASE 4 — calculator: operaciones estrechas y deterministas (sin eval), sin
+// dependencia del modelo. Se prueban directamente desde Node.
 export function average(numbers: number[]): number {
 	if (numbers.length === 0) {
 		throw new Error('Cannot calculate average of an empty array');

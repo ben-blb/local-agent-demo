@@ -1,3 +1,4 @@
+// FASE 6 — Códigos de error normalizados: estables y comprensibles para el agente.
 export type ToolErrorCode =
 	| 'TOOL_NOT_ALLOWED'
 	| 'INVALID_ARGUMENTS'
